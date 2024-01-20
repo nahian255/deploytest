@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 2000
+const port = process.env.PORT || 2000;
 const cors = require('cors');
 require('dotenv').config();
 
@@ -9,7 +9,7 @@ app.use(cors());
 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://newUsernn:oxt6paPPml6565ll@cluster0.skhrrsn.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.user}:${process.env.pass}@cluster0.skhrrsn.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -48,10 +48,14 @@ async function run() {
 run().catch(console.dir);
 
 
+
+app.get('/another', (req, res) => {
+    res.send('new checking')
+})
 app.get('/', (req, res) => {
     res.send('Bismillah-want to devloy.')
 })
 
-app.listen(port, () => {
-    console.log(`The server is running - ${port}`)
-})
+app.listen(process.env.PORT, () => {
+    console.log(`Server listening on port ${process.env.PORT}`);
+});
