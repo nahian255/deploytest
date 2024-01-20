@@ -77,6 +77,26 @@ async function run() {
             }
         });
 
+        // get my-property whith email..
+        app.get('/api/myadded-properites', async (req, res) => {
+            try {
+                const userEmail = req.query.email;
+
+                // console.log(userEmail);
+                if (!userEmail) {
+                    // If email is not provided in query parameters, return a bad request response
+                    return res.status(400).json({ error: 'Email parameter is missing' });
+                }
+
+                // Query the bookingProperty collection for data with the specified email
+                const bookings = await properitesCollection.find({ email: userEmail }).toArray();
+                res.status(200).json(bookings);
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
+
         // get single property detials...
         app.get('/single-properites/:id', async (req, res) => {
             try {
