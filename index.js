@@ -124,9 +124,9 @@ async function run() {
             try {
                 const itemId = req.params.id;
                 // Check if itemId is a valid ObjectId
-                if (!ObjectId.isValid(itemId)) {
-                    return res.status(400).json({ error: 'Invalid ObjectID' });
-                }
+                // if (!ObjectId.isValid(itemId)) {
+                //     return res.status(400).json({ error: 'Invalid ObjectID' });
+                // }
                 const item = await properitesCollection.findOne({ _id: new ObjectId(itemId) });
                 if (item) {
                     res.json(item);
