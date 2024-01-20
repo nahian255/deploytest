@@ -34,23 +34,15 @@ async function run() {
         const messageCollection = client.db('dreamDwell').collection('messageCollection');
 
 
-        app.get('/user', async (req, res) => {
-            try {
-                const info = await newCollection.find().toArray()
-                res.send(info)
-            } catch (error) {
-                console.log(error);
-            }
-        })
+        // app.get('/latest', async (req, res) => {
+        //     try {
+        //         const newinfo = await latesCollection.find().toArray()
+        //         res.send(newinfo)
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // })
 
-        app.get('/latest', async (req, res) => {
-            try {
-                const newinfo = await latesCollection.find().toArray()
-                res.send(newinfo)
-            } catch (error) {
-                console.log(error);
-            }
-        })
 
         // get all property here
         app.get('/properites', async (req, res) => {
@@ -93,6 +85,25 @@ async function run() {
                 // console.log(propertyDocument);
                 // Insert a single document
                 const result = await messageCollection.insertOne(propertyDocument);
+                console.log('Inserted property ID:', result.insertedId);
+                res.status(201).json({ message: 'Property added successfully' });
+            } catch (error) {
+                console.error('Error adding property:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
+
+        // add booking data in database.
+        app.post('/api/add-bookingProperty', async (req, res) => {
+            try {
+                const { dataId, name, details, image, email, price, bathroom, rooms, bookingConfirmed } = req.body;
+                // Create a document to be inserted
+                const bookingPropertyDocument = {
+                    dataId, name, details, image, email, price, bathroom, rooms, bookingConfirmed
+                };
+                // console.log(bookingPropertyDocument);
+                // Insert a single document
+                const result = await bookingCollection.insertOne(bookingPropertyDocument);
                 console.log('Inserted property ID:', result.insertedId);
                 res.status(201).json({ message: 'Property added successfully' });
             } catch (error) {
