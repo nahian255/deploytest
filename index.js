@@ -28,6 +28,8 @@ async function run() {
 
         const newCollection = client.db('academy').collection('super')
         const latesCollection = client.db('academy').collection('latest')
+        const properitesCollection = client.db('dreamDwell').collection('properitesInfo');
+
 
         app.get('/user', async (req, res) => {
             try {
@@ -46,6 +48,17 @@ async function run() {
                 console.log(error);
             }
         })
+
+        // get all property here
+        app.get('/properites', async (req, res) => {
+            try {
+                const items = await properitesCollection.find().toArray();
+                res.send(items);
+            } catch (error) {
+                console.error('Error getting items:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
