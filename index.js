@@ -60,6 +60,26 @@ async function run() {
             }
         });
 
+        // get single property detials...
+        app.get('/single-properites/:id', async (req, res) => {
+            try {
+                const itemId = req.params.id;
+                // Check if itemId is a valid ObjectId
+                if (!ObjectId.isValid(itemId)) {
+                    return res.status(400).json({ error: 'Invalid ObjectID' });
+                }
+                const item = await properitesCollection.findOne({ _id: new ObjectId(itemId) });
+                if (item) {
+                    res.json(item);
+                } else {
+                    res.status(404).json({ error: 'Item not found' });
+                }
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
+
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
