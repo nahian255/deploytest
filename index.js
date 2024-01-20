@@ -27,11 +27,21 @@ async function run() {
 
 
         const newCollection = client.db('academy').collection('super')
+        const latesCollection = client.db('academy').collection('latest')
 
         app.get('/user', async (req, res) => {
             try {
                 const info = await newCollection.find().toArray()
                 res.send(info)
+            } catch (error) {
+                console.log(error);
+            }
+        })
+
+        app.get('/latest', async (req, res) => {
+            try {
+                const newinfo = await latesCollection.find().toArray()
+                res.send(newinfo)
             } catch (error) {
                 console.log(error);
             }
