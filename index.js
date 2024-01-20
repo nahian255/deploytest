@@ -29,6 +29,7 @@ async function run() {
         const newCollection = client.db('academy').collection('super')
         const latesCollection = client.db('academy').collection('latest')
         const properitesCollection = client.db('dreamDwell').collection('properitesInfo');
+        const messageCollection = client.db('dreamDwell').collection('messageCollection');
 
 
         app.get('/user', async (req, res) => {
@@ -69,6 +70,27 @@ async function run() {
 
                 // Insert a single document
                 const result = await properitesCollection.insertOne(propertyDocument);
+                console.log('Inserted property ID:', result.insertedId);
+                res.status(201).json({ message: 'Property added successfully' });
+            } catch (error) {
+                console.error('Error adding property:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
+
+        // add message in database.
+        app.post('/api/add-message', async (req, res) => {
+            try {
+                const { name, email, message } = req.body;
+                // Create a document to be inserted
+                const propertyDocument = {
+                    name,
+                    email,
+                    message,
+                };
+                // console.log(propertyDocument);
+                // Insert a single document
+                const result = await messageCollection.insertOne(propertyDocument);
                 console.log('Inserted property ID:', result.insertedId);
                 res.status(201).json({ message: 'Property added successfully' });
             } catch (error) {
