@@ -32,6 +32,7 @@ async function run() {
         const latesCollection = client.db('academy').collection('latest')
         const properitesCollection = client.db('dreamDwell').collection('properitesInfo');
         const messageCollection = client.db('dreamDwell').collection('messageCollection');
+        const bookingCollection = client.db('dreamDwell').collection('bookingProperty');
 
 
         // app.get('/latest', async (req, res) => {
