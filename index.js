@@ -60,6 +60,23 @@ async function run() {
             }
         });
 
+        // add a property in database.
+        app.post('/api/add-properties', async (req, res) => {
+            try {
+                const { name, email, details, image, location, price, bathrooms, rooms } = req.body;
+                // Create a document to be inserted
+                const propertyDocument = { name, email, details, image, location, price, bathrooms, rooms };
+
+                // Insert a single document
+                const result = await properitesCollection.insertOne(propertyDocument);
+                console.log('Inserted property ID:', result.insertedId);
+                res.status(201).json({ message: 'Property added successfully' });
+            } catch (error) {
+                console.error('Error adding property:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
+
         // get single property detials...
         app.get('/single-properites/:id', async (req, res) => {
             try {
