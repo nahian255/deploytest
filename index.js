@@ -129,7 +129,7 @@ async function run() {
                 if (!ObjectId.isValid(itemId)) {
                     return res.status(400).json({ error: 'Invalid ObjectID' });
                 }
-                const item = await properitesCollection.find({ _id: new ObjectId(itemId) });
+                const item = await properitesCollection.findOne({ _id: new ObjectId(itemId) });
                 if (item) {
                     res.json(item);
                 } else {
