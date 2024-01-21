@@ -174,6 +174,46 @@ async function run() {
             }
         });
 
+        // Delete booking property 
+        app.delete('/api/delete-booking-property/:id', async (req, res) => {
+            try {
+                const propertyId = req.params.id;
+                console.log(propertyId);
+                if (!ObjectId.isValid(propertyId)) {
+                    return res.status(400).json({ error: 'Invalid ObjectID for property' });
+                }
+                const result = await bookingCollection.deleteOne({ _id: new ObjectId(propertyId) });
+                if (result.deletedCount > 0) {
+                    res.status(200).json({ message: 'Property deleted successfully' });
+                } else {
+                    res.status(404).json({ error: 'Property not found or deletion failed' });
+                }
+            } catch (error) {
+                console.error('Error deleting property:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
+
+        // Delete add-property 
+        app.delete('/api/delete-add-property/:id', async (req, res) => {
+            try {
+                const propertyId = req.params.id;
+                console.log(propertyId);
+                if (!ObjectId.isValid(propertyId)) {
+                    return res.status(400).json({ error: 'Invalid ObjectID for property' });
+                }
+                const result = await properitesCollection.deleteOne({ _id: new ObjectId(propertyId) });
+                if (result.deletedCount > 0) {
+                    res.status(200).json({ message: 'Property deleted successfully' });
+                } else {
+                    res.status(404).json({ error: 'Property not found or deletion failed' });
+                }
+            } catch (error) {
+                console.error('Error deleting property:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
+
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
