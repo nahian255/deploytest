@@ -27,22 +27,9 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
 
-
-        const newCollection = client.db('academy').collection('super')
-        const latesCollection = client.db('academy').collection('latest')
         const properitesCollection = client.db('dreamDwell').collection('properitesInfo');
         const messageCollection = client.db('dreamDwell').collection('messageCollection');
         const bookingCollection = client.db('dreamDwell').collection('bookingProperty');
-
-
-        // app.get('/latest', async (req, res) => {
-        //     try {
-        //         const newinfo = await latesCollection.find().toArray()
-        //         res.send(newinfo)
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // })
 
 
         // get all property here
@@ -224,11 +211,7 @@ async function run() {
 }
 run().catch(console.dir);
 
-
-
-app.get('/another', (req, res) => {
-    res.send('new checking')
-})
+// this is route route
 app.get('/', (req, res) => {
     res.send('Bismillah-want to devloy.')
 })
